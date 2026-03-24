@@ -14,8 +14,9 @@ pip3 install python-nmap --break-system-packages 2>/dev/null || pip3 install pyt
 
 # 3. Make Tmap executable and move it to the system binaries
 echo -e "\e[1;33m[*] Configuring system paths...\e[0m"
-chmod +x tmap.py
-sudo cp tmap.py /usr/local/bin/tmap
+chmod +x Tmap.py
+sudo cp Tmap.py /usr/local/bin/tmap-scan
+sudo chmod +x /usr/local/bin/tmap-scan
 
 echo -e "\e[1;32m[+] Tmap installed successfully!\e[0m"
 echo -e "\e[1;32m[+] You can now run it from anywhere by typing: tmap\e[0m"
