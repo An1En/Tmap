@@ -49,7 +49,6 @@ git clone https://github.com/An1En/Tmap.git
 cd Tmap
 
 # 3. Execute the global installer
-chmod +x install.sh
 sudo ./install.sh
 ```
 ## 💻 Usage
@@ -58,7 +57,7 @@ Tmap is designed to be frictionless. You do not need to memorize complex Nmap fl
 
 ```bash
 # Launch the interactive framework
-tmap
+tmap-scan
 ```
 ## ⚙️ CLI Arguments
 
@@ -72,7 +71,7 @@ For advanced users and automated pipelines, Tmap supports direct command-line ar
 **Example Automation Workflow:**
 ```bash
 # Instantly launch an aggressive scan against a target without any prompts
-tmap -t 10.10.10.5 -s aggressive
+tmap-scan -t 10.10.10.5 -s aggressive
 ```
 ## 👨‍💻 Author
 
@@ -80,4 +79,3 @@ tmap -t 10.10.10.5 -s aggressive
 * 🐙 **GitHub:** [@An1En](https://github.com/An1En)
 
 > *"Automate the reconnaissance. Weaponize the data."*
-
