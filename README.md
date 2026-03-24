@@ -72,7 +72,7 @@ For advanced users and automated pipelines, Tmap supports direct command-line ar
 **Example Automation Workflow:**
 ```bash
 # Instantly launch an aggressive scan against a target without any prompts
-tmap-scan -t 10.10.10.5 -s aggressive
+tmap -t 10.10.10.5 -s aggressive
 ```
 ## 👨‍💻 Author
 
