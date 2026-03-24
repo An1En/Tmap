@@ -17,5 +17,5 @@ cd Tmap
 # 3. Run the installer
 sudo ./install.sh
 
-## Usage
-  tmap-scan
+#4.excute
+tmap-scan
