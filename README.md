@@ -50,6 +50,33 @@ cd Tmap
 
 # 3. Execute the global installer
 sudo ./install.sh
+```
+## 💻 Usage
 
+Tmap is designed to be frictionless. You do not need to memorize complex Nmap flags or syntax. Simply launch the framework from anywhere in your terminal and let the interactive menu guide your reconnaissance.
 
-Would you like me to show you how to record a GIF of your terminal running Tmap so yo
+```bash
+# Launch the interactive framework
+tmap-scan
+```
+## ⚙️ CLI Arguments
+
+For advanced users and automated pipelines, Tmap supports direct command-line arguments to completely bypass the interactive menus.
+
+| Argument | Short Flag | Description | Example |
+| :--- | :--- | :--- | :--- |
+| `--target` | `-t` | Locks onto the target IP or hostname. | `-t 192.168.1.1` |
+| `--scan`   | `-s` | Skips the menu and runs the specified scan (`quick`, `stealth`, `service`, `aggressive`). | `-s aggressive` |
+
+**Example Automation Workflow:**
+```bash
+# Instantly launch an aggressive scan against a target without any prompts
+tmap-scan -t 10.10.10.5 -s aggressive
+```
+## 👨‍💻 Author
+
+**An1En** * 🛡️ **Focus:** Cybersecurity, Penetration Testing, and Automation
+* 🐙 **GitHub:** [@An1En](https://github.com/An1En)
+
+> *"Automate the reconnaissance. Weaponize the data."*
+
