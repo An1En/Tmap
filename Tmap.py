@@ -21,7 +21,7 @@ def banner():
     """)
 
 def print_results(nm):
-    """Parses Nmap scan results, prints them, and returns a list of open ports."""
+    """Parses initial Nmap scan results cleanly and returns open ports."""
     open_ports = []
     
     for host in nm.all_hosts():
@@ -38,44 +38,76 @@ def print_results(nm):
             for port in sorted(ports):
                 state = nm[host][proto][port]['state']
                 
-                # Catalog the port if it is definitively open
                 if state == 'open':
                     open_ports.append(port)
                     
                 service = nm[host][proto][port].get('name', '')
                 product = nm[host][proto][port].get('product', '')
                 version = nm[host][proto][port].get('version', '')
-                extrainfo = nm[host][proto][port].get('extrainfo', '')
                 
-                service_version = f"{product} {version} {extrainfo}".strip()
-                
+                service_version = f"{product} {version}".strip()
                 print(f"{port:<10} {state:<10} {service:<15} {service_version}")
-                
-                # If Nmap Scripting Engine (NSE) output exists, print a snippet
-                if 'script' in nm[host][proto][port]:
-                    for script_name, script_out in nm[host][proto][port]['script'].items():
-                        # Print just the first line of the script output to keep the terminal clean
-                        clean_out = script_out.split(chr(10))[0]
-                        print(f"    |__ [{script_name}]: {clean_out}...") 
 
     return open_ports
+
+def print_deep_results(nm):
+    """Parses and displays the extensive data from a Deep/Aggressive scan."""
+    for host in nm.all_hosts():
+        print(f"\n" + "="*50)
+        print(f"[+] DEEP ENUMERATION REPORT: {host} ({nm[host].hostname()})")
+        print("="*50)
+        
+        # 1. Display Operating System Detection
+        if 'osmatch' in nm[host] and len(nm[host]['osmatch']) > 0:
+            print("\n[*] Operating System Guesses:")
+            for os in nm[host]['osmatch']:
+                print(f"    |__ {os['name']} (Confidence: {os['accuracy']}%)")
+        
+        # 2. Display Detailed Port and Script Info
+        for proto in nm[host].all_protocols():
+            ports = nm[host][proto].keys()
+            print(f"\n[*] Detailed Port Analysis ({proto.upper()}):")
+            
+            for port in sorted(ports):
+                state = nm[host][proto][port]['state']
+                service = nm[host][proto][port].get('name', '')
+                product = nm[host][proto][port].get('product', '')
+                version = nm[host][proto][port].get('version', '')
+                extrainfo = nm[host][proto][port].get('extrainfo', '')
+                
+                print(f"\n    >> [Port {port}] - {state.upper()} - {service} {product} {version} {extrainfo}".strip())
+                
+                # Unleash the full Nmap Scripting Engine (NSE) output
+                if 'script' in nm[host][proto][port]:
+                    print("        |__ [Vulnerability/Enumeration Scripts]:")
+                    for script_name, script_out in nm[host][proto][port]['script'].items():
+                        print(f"            --> {script_name}:")
+                        # Print every line of the script output nicely indented
+                        for line in script_out.split('\n'):
+                            if line.strip():
+                                print(f"                {line.strip()}")
+        
+        # 3. Display Host-Level Scripts (e.g., general SMB or DNS discoveries)
+        if 'hostscript' in nm[host]:
+            print("\n[*] Host-Level Script Discoveries:")
+            for script in nm[host]['hostscript']:
+                print(f"    |__ {script['id']}:")
+                for line in script['output'].split('\n'):
+                    if line.strip():
+                        print(f"        {line.strip()}")
 
 def run_deep_scan(target, ports):
     """Runs an intensive scan specifically targeted at identified open ports."""
     nm = nmap.PortScanner()
-    
-    # Convert the Python list of ports [80, 443] into a string "80,443" for Nmap
     port_string = ','.join(map(str, ports))
     
-    print(f"\n" + "="*50)
-    print(f"[*] INITIATING DEEP ENUMERATION ON PORTS: {port_string}")
-    print(f"[*] Modules: Version Detection (-sV), Default Scripts (-sC), OS Info (-A)")
-    print("="*50)
+    print(f"\n[*] INITIATING DEEP ENUMERATION ON PORTS: {port_string}")
+    print(f"[*] This may take a minute. Firing heavily weaponized probes...")
     
     try:
-        # Target ONLY the open ports using the -p flag to save time
         nm.scan(hosts=target, ports=port_string, arguments='-A -sC -sV -T4')
-        print_results(nm)
+        # Use our new dedicated deep parsing engine!
+        print_deep_results(nm)
     except Exception as e:
         print(f"\n[-] Deep Scan Error: {e}")
 
@@ -93,16 +125,12 @@ def run_scan(target, scan_type):
     elif scan_type == 'aggressive':
         args = '-A -T4'
     else:
-        print("[-] Unknown scan type selected.")
         return
 
     try:
         nm.scan(hosts=target, arguments=args)
-        
-        # Call the helper function to print and grab the open ports
         open_ports = print_results(nm)
         
-        # Trigger the Deep Scan prompt if ports were found
         if open_ports:
             print(f"\n[*] Discovered {len(open_ports)} open ports.")
             choice = input("[?] Would you like to run a Deep Scan on these specific ports? (y/n): ").strip().lower()
@@ -145,12 +173,12 @@ def interactive_menu(target):
             print("\n[*] Shutting down Tmap. Goodbye, An1En.\n")
             sys.exit(0)
         else:
-            print("\n[-] Invalid selection. Please enter a number between 1 and 5.")
+            print("\n[-] Invalid selection.")
 
 def main():
     banner()
     parser = argparse.ArgumentParser(description="Tmap - Python Nmap Wrapper by An1En")
-    parser.add_argument("-t", "--target", help="Target IP or hostname (e.g., 192.168.1.1)")
+    parser.add_argument("-t", "--target", help="Target IP or hostname")
     
     args = parser.parse_args()
     
@@ -158,7 +186,6 @@ def main():
     if not target:
         target = input("[?] Enter target IP or hostname: ").strip()
         if not target:
-            print("[-] Target cannot be empty. Exiting.")
             sys.exit(1)
             
     interactive_menu(target)
