@@ -9,7 +9,7 @@ To install Tmap on any Debian/Ubuntu/Kali system, run the following commands in 
 
 ```bash
 # 1. Clone the repository
-git clone [https://github.com/YOUR_USERNAME/Tmap.git](https://github.com/YOUR_USERNAME/Tmap.git)
+git clone https://github.com/An1En/Tmap.git
 
 # 2. Navigate into the directory
 cd Tmap
