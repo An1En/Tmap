@@ -49,6 +49,7 @@ git clone https://github.com/An1En/Tmap.git
 cd Tmap
 
 # 3. Execute the global installer
+chmod +x install.sh
 sudo ./install.sh
 ```
 ## 💻 Usage
