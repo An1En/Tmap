@@ -50,47 +50,6 @@ cd Tmap
 
 # 3. Execute the global installer
 sudo ./install.sh
-💻 Usage
-Once installed, you can launch the interactive framework from anywhere in your terminal:
-
-Bash
-tmap-scan
-CLI Arguments
-If you prefer to skip the interactive menu, you can pass targets directly:
-
-Bash
-tmap-scan -t 192.168.1.1
-tmap-scan --target scanme.nmap.org
-👨‍💻 Author
-An1En * GitHub: @YourUsername
-
-<p align="center"><i>"Automate the boring stuff. Hack the rest."</i></p>
-
-
------
-
-### **3 Secrets to GitHub Aesthetics**
-
-If you want to customize that template further, here are the three tricks used to make it look pro:
-
-**1. HTML Centering (`<p align="center">`)**
-Standard Markdown forces everything to the left side of the screen. By wrapping your titles, badges, and sub-menus in HTML center tags, you create a balanced, modern website look.
-
-**2. Dynamic Badges (Shields.io)**
-Those `img.shields.io` links at the top of the template automatically generate the clean little colored tags that say "Python" or "Linux". They instantly signal to other developers that the project is well-maintained.
-
-**3. The Collapsible Section (For long logs)**
-If you ever want to show a massive wall of code (like a full Tmap scan output) without cluttering the README, wrap it in a `details` tag. It creates a neat little dropdown arrow\!
-
-````html
-<details>
-  <summary>Click to view full Deep Scan output</summary>
-  
-  ```text
-  [+] Host: 192.168.1.1
-  [*] Detailed Port Analysis:
-  ...
-</details>
 
 
 Would you like me to show you how to record a GIF of your terminal running Tmap so yo
