@@ -58,7 +58,7 @@ Tmap is designed to be frictionless. You do not need to memorize complex Nmap fl
 
 ```bash
 # Launch the interactive framework
-tmap-scan
+tmap
 ```
 ## ⚙️ CLI Arguments
 
