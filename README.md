@@ -51,6 +51,9 @@ cd Tmap
 # 3. Execute the global installer
 sudo ./install.sh
 ```
+## Screenshot
+<img width="895" height="643" alt="Screenshot 2026-03-24 170248" src="https://github.com/user-attachments/assets/f6c1c6aa-2192-4966-ace3-8fb1d747bfcc" />
+
 ## 💻 Usage
 
 Tmap is designed to be frictionless. You do not need to memorize complex Nmap flags or syntax. Simply launch the framework from anywhere in your terminal and let the interactive menu guide your reconnaissance.
